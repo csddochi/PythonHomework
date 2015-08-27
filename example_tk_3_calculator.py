@@ -34,8 +34,8 @@ class Example(tk.Frame):
         cls.grid(row=1, column=0)
         bck = ttk.Button(self, text="Back", command=lambda: self.clicked_pb('Back'))
         bck.grid(row=1, column=1)
-        lbl = ttk.Button(self)
-        lbl.grid(row=1, column=2)
+        chi = ttk.Button(self, text="Int", command=lambda: self.clicked_pb('Int'))
+        chi.grid(row=1, column=2)
         clo = ttk.Button(self, text="Close", command=lambda: self.clicked_pb('Close'))
         clo.grid(row=1, column=3)
         pb_7 = ttk.Button(self, text="7", command=lambda: self.clicked_pb(7))
@@ -79,7 +79,13 @@ class Example(tk.Frame):
 
     def clicked_pb(self, data):
         if data == '=':
-            self.entry_data = eval(self.entry_data)
+            try:
+                self.entry_data = eval(self.entry_data)
+                self.entry_data = str(self.entry_data)
+            except ZeroDivisionError:
+                self.entry_data = self.entry_data[:1]
+            except:
+                self.entry_data = ''
 
         elif data == 'Cls':
             self.entry_data = ''
@@ -90,6 +96,11 @@ class Example(tk.Frame):
         elif data == 'Close':
             exit()
 
+        elif data == 'Int':
+            try:
+                self.entry_data = '{0:.0f}'.format(float(self.entry_data))
+            except:
+                pass
         else:
             self.entry_data += str(data)
 
